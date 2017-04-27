@@ -12,8 +12,8 @@ import java.util.ArrayList;
  */
 public class GameMaster {
 
-	private static boolean verbose = false; //Set to false if you do not want much detail printed to console
-	private static int numGames = 25; //use a small number for quick tests, a large one to be comprehensive
+	private static boolean verbose = true; //Set to false if you do not want much detail printed to console
+	private static int numGames = 5; //use a small number for quick tests, a large one to be comprehensive
 	private static int parameterSetting = 1; //see changeParameters()
 	
 	/**
@@ -28,12 +28,9 @@ public class GameMaster {
 			return new MaxPower();
 		else if(name.equalsIgnoreCase("HankScorpio"))
 			return new HankScorpio();
-		////////////////////////////////////
-		//your player here
-		////////////////////////////////////
-        /*else if(name.equalsIgnoreCase("YOUR AGENT HERE")
-		 * 	return new StudentAgent();
-		 */
+		else if(name.equalsIgnoreCase("DanBilzerian"))
+		  	return new danBilzerian();
+
 		// in case your name was not added
 		return null;
 	}
@@ -50,6 +47,7 @@ public class GameMaster {
 		players.add(new TestPlayer());
 		players.add(new MaxPower());
 		players.add(new HankScorpio());
+		players.add(new danBilzerian());
 		////////////////////////////////////
 		//your player here
 		////////////////////////////////////

@@ -5,9 +5,9 @@ package CardPickup;
 
 public class Parameters {
     /**Identifies the number of nodes in an initial graph*/
-    public static int NUMBER_OF_NODES = 15;
+    public static int NUMBER_OF_NODES = 7;
     /**Identifies the maximum number of neighbors in an initial graph for non-router nodes*/
-    public static int MAX_NEIGHBORS = 4;
+    public static int MAX_NEIGHBORS = 3;
     /**Identifies the minimum number of neighbors in an initial graph for non-router nodes*/
     public static int MIN_NEIGHBORS = 1;
     /**Identifies the number of possible cards in the uncertain graph*/
