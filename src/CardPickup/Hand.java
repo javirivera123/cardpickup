@@ -132,6 +132,12 @@ public class Hand {
         return ( ( i < cardsHole.size() ) ? (Card)cardsHole.get(i) : null );
     }
 
+
+
+
+
+    public ArrayList getCardHole() { return cardsHole; }
+
 /***************************
  * getSharedCard() returns the requested shared card
  *

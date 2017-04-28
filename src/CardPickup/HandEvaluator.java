@@ -66,15 +66,13 @@ public class HandEvaluator {
  **/
     public HandEvaluator()  {}
 
-/***************************
- * rankHand() is used to return the rank of a hand.  This version will take a Hand argument and use
- * up to 5 cards in the hand to rank. It will start with the hole cards, and then the up cards and
- * finally the shared cards. It will only take up to 5 cards - if there are more, they get ignored.
- *
- * @param h The hand to rank
- * @return The numerical rank of the Hand
- *
- **/
+    /***********************
+     * suitHand() is used to return which suit is dominant in the players current hand
+     *  suit of the Card.  Clubs = 1, Diamonds = 2, Hearts = 3, Spades = 4
+     *
+     */
+
+
     public float rankHand( Hand h ) {
         ArrayList cardList = new ArrayList( 5 );
         int numCards = 0;
