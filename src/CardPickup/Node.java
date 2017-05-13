@@ -22,6 +22,7 @@ public class Node
     public ArrayList<Node> neighbor = new ArrayList<Node>();
     private Card trueCard;
     private ArrayList<Card> possibleCards;
+    private int rankOfNode;
     
 	/**
      * Empty Constructor.

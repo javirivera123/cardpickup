@@ -59,6 +59,52 @@ public class danBilzerian extends Player {
             oppLastCard = null;
     }
 
+    protected void evaluateGraph() {
+        HandEvaluator he; // A reference to HandEval class
+
+        he = new HandEvaluator(); // Creating class B
+
+        //b.doSomething();  // Calling a method contained in class B from class A
+
+        for (int i = 0; i < graph.length; i++) {
+            ArrayList<Card> possibleHand = new ArrayList<Card>();  //define possible Hand size of hole size +1 (room for each card at node) to evaluate
+
+            for(int j =0; j<this.hand.cardsHole.size(); j++)
+                possibleHand.add(this.hand.getHoleCard(j)); //fill with current cards in hand
+
+            for (int k = 0; k < graph[i].getPossibleCards().size(); k++) { //for each possible card in node
+                     possibleHand.add(graph[k].getPossibleCards().get(k));
+                switch (possibleHand.size()) {
+                    case 1:
+                        he.rankHand(possibleHand.get(0));
+                        break;
+                    case 2:
+                        he.rankHand(possibleHand.get(0), possibleHand.get(1));
+                        break;
+                    case 3:
+                        he.rankHand(possibleHand.get(0), possibleHand.get(1), possibleHand.get(2));
+                        break;
+                    case 4:
+                        he.rankHand(possibleHand.get(0), possibleHand.get(1), possibleHand.get(2), possibleHand.get(3));
+                        break;
+                    case 5:
+                        he.rankHand(possibleHand.get(0), possibleHand.get(1), possibleHand.get(2), possibleHand.get(3), possibleHand.get(4));
+                        break;
+                    default:
+                        System.out.println("Invalid size of rank");
+                        break;
+                }
+
+
+
+                    }//end for each in hand
+                }
+            }
+
+
+
+
+
     /**
      * THIS METHOD SHOULD BE OVERRIDDEN if you wish to make computations off of your results.
      * GameMaster will call this to update you on your actions.
@@ -75,72 +121,68 @@ public class danBilzerian extends Player {
     //The suit of the Card.  Clubs = 1, Diamonds = 2, Hearts = 3, Spades = 4
     public void getNameOfSuit(int suit) {
         switch (suit) {
-            case 1: System.out.println("Dominant Suit in My Hand is: Clubs");
-            break;
+            case 1:
+                System.out.println("Dominant Suit in My Hand is: Clubs");
+                break;
 
-            case 2: System.out.println("Dominant Suit in My Hand is: Diamonds");
-            break;
+            case 2:
+                System.out.println("Dominant Suit in My Hand is: Diamonds");
+                break;
 
-            case 3: System.out.println("Dominant Suit in My Hand is: Hearts");
-            break;
+            case 3:
+                System.out.println("Dominant Suit in My Hand is: Hearts");
+                break;
 
-            case 4: System.out.println("Dominant Suit in My Hand is: Spades");
-            break;
+            case 4:
+                System.out.println("Dominant Suit in My Hand is: Spades");
+                break;
 
-            default: System.out.println("No dominant card");
-            break;
+            default:
+                System.out.println("No dominant card");
+                break;
 
         }
     }//end of getnamesuit
 
-    /**
-     * Player logic goes here
-     */
     public Action makeAction() {
-            int dominantSuit = getDominant();  //evaluate dominant suit in hand
-            getNameOfSuit(dominantSuit);
+        int dominantSuit = getDominant();  //evaluate dominant suit in hand
+        getNameOfSuit(dominantSuit);// print name of dominant suit in hand
 
-            int[] sums = new int[graph[currentNode].getNeighborAmount()];
-            for(int i = 0; i < sums.length; i++){
-                ArrayList<Card> possible = graph[currentNode].getNeighbor(i).getPossibleCards();
-                if(possible.size()!=0){
-                    for(int j = 0; j < possible.size(); j++)
-                        if(possible.get(j).getRank()==1)//ace
-                            sums[i] += 14;
-                        else
-                            sums[i] += possible.get(j).getRank();
+        evaluateGraph();
+
+
+                int maxIndex = 0;
+              /*  for (int k = 1; k < sums.length; k++)
+                    if (sums[maxIndex] < sums[k])
+                        maxIndex = k;*/
+                if (graph[currentNode].getNeighbor(maxIndex).getPossibleCards().size() == 0) {
+                    Random r = new Random();
+                    //int neighbor = graph[currentNode].getNeighbor(maxIndex).getNodeID();
+                    int neighbor = graph[currentNode].getNeighbor(r.nextInt(graph[currentNode].getNeighborAmount())).getNodeID();
+                    return new Action(ActionType.MOVE, neighbor);
                 }
-            }
-            int maxIndex = 0;
-            for(int k = 1; k < sums.length; k++)
-                if(sums[maxIndex] < sums[k])
-                    maxIndex = k;
-            if(graph[currentNode].getNeighbor(maxIndex).getPossibleCards().size()==0) {
-                Random r = new Random();
-                //int neighbor = graph[currentNode].getNeighbor(maxIndex).getNodeID();
-                int neighbor = graph[currentNode].getNeighbor(r.nextInt(graph[currentNode].getNeighborAmount())).getNodeID();
-                return new Action(ActionType.MOVE, neighbor);
-            }
-            int neighbor = graph[currentNode].getNeighbor(maxIndex).getNodeID();
-            return new Action(ActionType.PICKUP, neighbor);
-        }
+                int neighbor = graph[currentNode].getNeighbor(maxIndex).getNodeID();
+                return new Action(ActionType.PICKUP, neighbor);
 
+        }
     private int getDominant() {
         int[] suits = new int[5];
         int dominantSuit = 1;
+        //int[] sameDominance = new int[5];
 
         ArrayList<Card> myHand = this.hand.getCardHole(); // list of cards in my hand
-        if(myHand.size()!=0){
-            for(int j = 0; j < myHand.size(); j++)
+        if (myHand.size() != 0) {
+            for (int j = 0; j < myHand.size(); j++)
                 suits[myHand.get(j).getSuit()] += 1;  //marking which suits are present in hand
         }
 
 
-        for(int i=1; i< suits.length; i++)
-            if(suits[i] > suits[dominantSuit])
+        for (int i = 1; i < suits.length; i++) {
+            if (suits[i] > suits[dominantSuit])
                 dominantSuit = i;
 
+        }
         return dominantSuit;
     } //end getDominant() class
 
-} //end danBilzerian class
+}//end danBilzerian class

@@ -41,7 +41,7 @@ import java.util.Arrays;
  **/
 public class Hand {
 
-    private    ArrayList   cardsHole;            // List of cards held in player's hole (down)
+    public ArrayList   cardsHole;            // List of cards held in player's hole (down)
     private    ArrayList   cardsShared;          // List of shared cards that player can use
     private    ArrayList   cardsUp;              // List of up cards in players hand (that others can see)
 
